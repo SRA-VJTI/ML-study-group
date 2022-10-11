@@ -6,7 +6,7 @@ theme = "hugo-theme-codex"
 # Override these settings with your own
 title = "codex"
 languageCode = "en-us"
-baseURL = "/"
+baseURL = "https://sravjti.in/ML-study-group/"
 copyright = "© {2022}"
 
 # Add your Disqus shortname here.
