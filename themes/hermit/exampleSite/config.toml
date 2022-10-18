@@ -1,9 +1,8 @@
-baseURL = "https://sravjti.in/ML-study-group/"
+baseURL = "https://example.com"
 languageCode = "en-us"
 defaultContentLanguage = "en"
-title = "ML Study Group"
+title = "Hugo Hermit"
 theme = "hermit"
-
 # enableGitInfo = true
 pygmentsCodefences  = true
 pygmentsUseClasses  = true
@@ -13,11 +12,9 @@ copyright = "This work is licensed under a Creative Commons Attribution-NonComme
 enableEmoji = true  # Shorthand emojis in content files - https://gohugo.io/functions/emojify/
 # googleAnalytics = "UA-123-45"
 # disqusShortname = "yourdiscussshortname"
-disableKinds = "RSS"
-
 
 [author]
-  name = "SRA VJTI"
+  name = "John Doe"
 
 [blackfriday]
   # hrefTargetBlank = true
@@ -39,8 +36,8 @@ disableKinds = "RSS"
   # images = [""]
   themeColor = "#494f5c"
 
-  homeSubtitle = "by SRA VJTI"
-  # footerCopyright = ' &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>'
+  homeSubtitle = "A minimal and fast theme for Hugo."
+  footerCopyright = ' &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>'
   # bgImg = ""  # Homepage background-image URL
 
   # Prefix of link to the git commit detail page. GitInfo must be enabled.
@@ -59,16 +56,25 @@ disableKinds = "RSS"
   # Social Icons
   # Check https://github.com/Track3/hermit#social-icons for more info.
   [[params.social]]
-    name = "email"
-    url = "mailto:sra@vjti.ac.in"
+    name = "twitter"
+    url = "https://twitter.com/"
+
+  [[params.social]]
+    name = "instagram"
+    url = "https://instagram.com/"
 
   [[params.social]]
     name = "github"
-    url = "https://github.com/SRA-VJTI"
-
+    url = "https://github.com/"
 
 [menu]
+
   [[menu.main]]
-    name = "Notes"
-    url = "notes/"
+    name = "Posts"
+    url = "posts/"
     weight = 10
+
+  [[menu.main]]
+    name = "About"
+    url = "about-hugo/"
+    weight = 20
