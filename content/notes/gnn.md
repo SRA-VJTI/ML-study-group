@@ -1,6 +1,6 @@
 ---
 author: "Kush Kothari"
-title: "An intro to Graph Machine Learning"
+title: "An Intro to Graph Machine Learning"
 date: 2022-10-18T14:56:19+05:30
 draft: false
 tags:
@@ -29,8 +29,21 @@ Graph Embeddings seek to learn latent representations of social interactions in 
 For creating embeddings we need to transform the graph data into something that can effectively stream the structure of the graph (and hence it's short-term and long-term complexities). Short random walks are perfect for this. Shorter term complexities are captured well by the actual structure and orderings of the nodes in the walk. Longer term complexities are captured through the probability distribution from which the initial node is sampled.
 
 Methods that use **short random walks** have 2 particular advantages:
-- These are trivially easy to paralellize. Several parallel computational resources (like threads, processes or machines) can be set up to explore different versions of the graph parallely.
-- Since the walks are short, at a time only a small subset of nodes will be updated at the same time. This makes it easy to accomodate small changes to an existing embedding without the need for global recomputation.
+- These are trivially easy to parallelize. Several parallel computational resources (like threads, processes or machines) can be set up to explore different sections of the graph parallelly.
+- Since the walks are short, only a small subset of nodes will be updated at a time. This makes it easy to accomodate small changes to an existing embedding without the need for global recomputation.
+
+## Power Law and how a graph embedding is equivalent to a language embedding
+The power law can be simply stated as:
+> A functional relationship between 2 quantities, where a relative change in one quantity results in a proportional relative change in another quantitiy.
+
+The power law distribution has the mathematical form of:
+$$y = kx^\alpha$$
+
+Now, it can be mathematically proved that if the degree-distribution of a graph follows a power-law, the frequency with which various vertices will appear in short random walks will also follow a power law. Additionally, from past research we know that in natural language, the frequency with which words appear in natural language also follows a similar power law. This is shown in the diagram below.
+
+{{<figure src="../static/power-law-deepwalk.png" caption="Figure 2. DeepWalk: Online Learning of Social Representations">}}
+
+This essentially means that existing language modelling techniques that are already qualified to deal with data that follows a power distribution will also generalize to finding social representations in graphs.
 
 Citation: [DeepWalk: Online Learning of Social Representations](https://arxiv.org/abs/1403.6652)
 
