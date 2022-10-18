@@ -2,15 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://sravjti.in/ML-study-group/tags/demo/</loc>
+    <lastmod>2022-10-18T11:08:37+05:30</lastmod>
+  </url><url>
+    <loc>https://sravjti.in/ML-study-group/tags/demo2/</loc>
+    <lastmod>2022-10-18T11:08:37+05:30</lastmod>
+  </url><url>
     <loc>https://sravjti.in/ML-study-group/notes/</loc>
-    <lastmod>2022-10-11T11:56:55+05:30</lastmod>
+    <lastmod>2022-10-18T11:08:37+05:30</lastmod>
   </url><url>
     <loc>https://sravjti.in/ML-study-group/notes/steps/</loc>
-    <lastmod>2022-10-11T11:56:55+05:30</lastmod>
+    <lastmod>2022-10-18T11:08:37+05:30</lastmod>
+  </url><url>
+    <loc>https://sravjti.in/ML-study-group/tags/</loc>
+    <lastmod>2022-10-18T11:08:37+05:30</lastmod>
   </url><url>
     <loc>https://sravjti.in/ML-study-group/</loc>
     <lastmod>2022-10-11T11:49:25+05:30</lastmod>
-  </url><url>
-    <loc>https://sravjti.in/ML-study-group/tags/</loc>
   </url>
 </urlset>
