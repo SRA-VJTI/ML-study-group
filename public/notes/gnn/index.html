@@ -7,11 +7,11 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<meta name="theme-color" content="#494f5c">
 	<meta name="msapplication-TileColor" content="#494f5c">
-<meta itemprop="name" content="An intro to Graph Machine Learning">
+<meta itemprop="name" content="An Intro to Graph Machine Learning">
 <meta itemprop="description" content="Graph data is quite abundant around us. Almost all data that we can think of can be represented as a graph in some way or the other. Apart from the obvious applications of graph research in GPS and the analysis of social networks, we can also model a lot of other data in graphs. For example, images can be thought of as just nodes with RGB features connected as a grid."><meta itemprop="datePublished" content="2022-10-18T14:56:19+05:30" />
 <meta itemprop="dateModified" content="2022-10-18T14:56:19+05:30" />
-<meta itemprop="wordCount" content="584">
-<meta itemprop="keywords" content="graphs," /><meta property="og:title" content="An intro to Graph Machine Learning" />
+<meta itemprop="wordCount" content="739">
+<meta itemprop="keywords" content="graphs," /><meta property="og:title" content="An Intro to Graph Machine Learning" />
 <meta property="og:description" content="Graph data is quite abundant around us. Almost all data that we can think of can be represented as a graph in some way or the other. Apart from the obvious applications of graph research in GPS and the analysis of social networks, we can also model a lot of other data in graphs. For example, images can be thought of as just nodes with RGB features connected as a grid." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://sravjti.in/ML-study-group/notes/gnn/" /><meta property="article:section" content="notes" />
@@ -19,7 +19,7 @@
 <meta property="article:modified_time" content="2022-10-18T14:56:19+05:30" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="An intro to Graph Machine Learning"/>
+<meta name="twitter:title" content="An Intro to Graph Machine Learning"/>
 <meta name="twitter:description" content="Graph data is quite abundant around us. Almost all data that we can think of can be represented as a graph in some way or the other. Apart from the obvious applications of graph research in GPS and the analysis of social networks, we can also model a lot of other data in graphs. For example, images can be thought of as just nodes with RGB features connected as a grid."/>
 
 	<link rel="apple-touch-icon" sizes="180x180" href="/ML-study-group/apple-touch-icon.png">
@@ -29,7 +29,7 @@
 	<link rel="mask-icon" href="/ML-study-group/safari-pinned-tab.svg" color="">
 	<link rel="shortcut icon" href="/ML-study-group/favicon.ico">
 
-	<title>An intro to Graph Machine Learning</title>
+	<title>An Intro to Graph Machine Learning</title>
 	<link rel="stylesheet" href="https://sravjti.in/ML-study-group/css/style.min.1880a53e93805e9dd23983de006b12e4c911609c4c537a264e14d0b330fd6888.css" integrity="sha256-GIClPpOAXp3SOYPeAGsS5MkRYJxMU3omThTQszD9aIg=" crossorigin="anonymous">
 	
 </head>
@@ -61,7 +61,7 @@
 
 
 	<main class="site-main section-inner thin animated fadeIn faster">
-		<h1>An intro to Graph Machine Learning</h1>
+		<h1>An Intro to Graph Machine Learning</h1>
 		<div class="content">
 			<p>Graph data is quite abundant around us. Almost all data that we can think of can be represented as a graph in some way or the other. Apart from the obvious applications of graph research in GPS and the analysis of social networks, we can also model a lot of other data in graphs. For example, images can be thought of as just nodes with RGB features connected as a grid. NLP research also makes a lot of graph data for example parse trees etc. Graph ML, as a whole is applied in a large variety of domains like:</p>
 <ul>
@@ -85,9 +85,24 @@
 <p>For creating embeddings we need to transform the graph data into something that can effectively stream the structure of the graph (and hence it&rsquo;s short-term and long-term complexities). Short random walks are perfect for this. Shorter term complexities are captured well by the actual structure and orderings of the nodes in the walk. Longer term complexities are captured through the probability distribution from which the initial node is sampled.</p>
 <p>Methods that use <strong>short random walks</strong> have 2 particular advantages:</p>
 <ul>
-<li>These are trivially easy to paralellize. Several parallel computational resources (like threads, processes or machines) can be set up to explore different versions of the graph parallely.</li>
-<li>Since the walks are short, at a time only a small subset of nodes will be updated at the same time. This makes it easy to accomodate small changes to an existing embedding without the need for global recomputation.</li>
+<li>These are trivially easy to parallelize. Several parallel computational resources (like threads, processes or machines) can be set up to explore different sections of the graph parallelly.</li>
+<li>Since the walks are short, only a small subset of nodes will be updated at a time. This makes it easy to accomodate small changes to an existing embedding without the need for global recomputation.</li>
 </ul>
+<h2 id="power-law-and-how-a-graph-embedding-is-equivalent-to-a-language-embedding">Power Law and how a graph embedding is equivalent to a language embedding<a href="#power-law-and-how-a-graph-embedding-is-equivalent-to-a-language-embedding" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>The power law can be simply stated as:</p>
+<blockquote>
+<p>A functional relationship between 2 quantities, where a relative change in one quantity results in a proportional relative change in another quantitiy.</p>
+</blockquote>
+<p>The power law distribution has the mathematical form of:
+$$y = kx^\alpha$$</p>
+<p>Now, it can be mathematically proved that if the degree-distribution of a graph follows a power-law, the frequency with which various vertices will appear in short random walks will also follow a power law. Additionally, from past research we know that in natural language, the frequency with which words appear in natural language also follows a similar power law. This is shown in the diagram below.</p>
+<figure><img src="../static/power-law-deepwalk.png"
+         alt="Figure 2. DeepWalk: Online Learning of Social Representations"/><figcaption>
+            <p>Figure 2. DeepWalk: Online Learning of Social Representations</p>
+        </figcaption>
+</figure>
+
+<p>This essentially means that existing language modelling techniques that are already qualified to deal with data that follows a power distribution will also generalize to finding social representations in graphs.</p>
 <p>Citation: <a href="https://arxiv.org/abs/1403.6652">DeepWalk: Online Learning of Social Representations</a></p>
 
 		</div>
