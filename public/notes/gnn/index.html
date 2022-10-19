@@ -10,7 +10,7 @@
 <meta itemprop="name" content="An Intro to Graph Machine Learning">
 <meta itemprop="description" content="Graph data is quite abundant around us. Almost all data that we can think of can be represented as a graph in some way or the other. Apart from the obvious applications of graph research in GPS and the analysis of social networks, we can also model a lot of other data in graphs. For example, images can be thought of as just nodes with RGB features connected as a grid."><meta itemprop="datePublished" content="2022-10-18T14:56:19+05:30" />
 <meta itemprop="dateModified" content="2022-10-18T14:56:19+05:30" />
-<meta itemprop="wordCount" content="1131">
+<meta itemprop="wordCount" content="1401">
 <meta itemprop="keywords" content="graphs," /><meta property="og:title" content="An Intro to Graph Machine Learning" />
 <meta property="og:description" content="Graph data is quite abundant around us. Almost all data that we can think of can be represented as a graph in some way or the other. Apart from the obvious applications of graph research in GPS and the analysis of social networks, we can also model a lot of other data in graphs. For example, images can be thought of as just nodes with RGB features connected as a grid." />
 <meta property="og:type" content="article" />
@@ -145,14 +145,38 @@ $$</p>
 <p>$$D_{KL}\left(P^{*}\ \middle\Vert \ P\right) = - H\left(P^{*}\right) + H\left(P^{*},P\right)$$</p>
 <p>Thus the value of θ that minimizes the cross-entropy between P* and P, also minimizes the KL Divergence between P* and P.</p>
 <p>$$\underset{\theta}{argmin}\ D_{KL}\left(P^{*}\ \middle\Vert \ P\right) \equiv \underset{\theta}{argmin}\ H\left(P^{*},\ P\right)$$</p>
+<h2 id="word-embeddings-why-though-3">Word Embeddings? Why though? <sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup><a href="#word-embeddings-why-though-3" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>For a second, pause and just imagine how we would explain words and their meanings to computers. How would you provide the following association to a computer?</p>
+<blockquote>
+<p>Queen is to King as Woman is to Man</p>
+</blockquote>
+<p>Perhaps, if you had a mathematical function that takes in words and represents them as vectors, you could say:
+$$\Phi(&ldquo;King&rdquo;) = \Phi(&ldquo;Queen&rdquo;) - \Phi(&ldquo;Woman&rdquo;) + \Phi(&ldquo;Man&rdquo;)$$</p>
+<p>In word embeddings, the aim is to capture such realtions between words mathematically.</p>
+<p>Often you will also see embeddings being writtien as <strong>distributed representations</strong> of words. Why is that?</p>
+<blockquote>
+<p>This is because we are distributing the actual meaning of the word over multiple mathematical dimensions. The quality of a &ldquo;King&rdquo; being a man is represented by a subset of the dimensions of the vector representation. And, the a particular dimension of the vector representation represents a subset of the qualities a word like &ldquo;King&rdquo; can posses.</p>
+</blockquote>
+<h2 id="an-intro-to-language-modelling-1">An Intro to Language Modelling <sup id="fnref6:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup><a href="#an-intro-to-language-modelling-1" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>The fundamental goal of language modelling is to estimate the likelihood of a specific sequence of words appearing in a corpus. More formally, given any sequence of words (w1,w2,w3,&hellip;wn) from the training corpus, we would like to maximize:
+$$Pr\left(w_{n} \middle\vert w_{1},w_{2},w_{3},&hellip;,w_{n-2},w_{n-1}\right)$$
+over the entire training corpus.</p>
+<p>But if we are representing words with the corresponding distributed vector representation, we can also maximize:
+$$Pr\left(w_{n} \middle\vert \Phi(w_{1}),\Phi(w_{2}),\Phi(w_{3}),&hellip;,\Phi(w_{n-2}),\Phi(w_{n-1})\right)$$</p>
+<p>But recent advancements in Language modelling turn this problem around in ways that only use the &ldquo;word-vectorizer&rdquo; function only once. We now aim to do,
+$$\underset{\Phi}{argmin}\ -log\ Pr\left({v_{i-w},&hellip;,v_{i-1},v_{i+1},&hellip;,v_{i+w}}\ \middle\vert\ \Phi(v_{i})\right)$$</p>
+<p>Do you understand how this model is &ldquo;order-independant&rdquo;?</p>
 <div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
 <li id="fn:1">
-<p><a href="https://arxiv.org/abs/1403.6652">DeepWalk: Online Learning of Social Representations</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref2:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref3:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref4:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref5:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://arxiv.org/abs/1403.6652">DeepWalk: Online Learning of Social Representations</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref2:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref3:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref4:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref5:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref6:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:2">
 <p><a href="https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence">Kullback–Leibler divergence Wikipedia</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="https://arxiv.org/abs/1301.3781">Efficient Estimation of Word Representations in Vector Space</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </div>
