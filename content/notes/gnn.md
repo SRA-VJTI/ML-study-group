@@ -91,5 +91,33 @@ Thus the value of θ that minimizes the cross-entropy between P\* and P, also mi
 
 $$\underset{\theta}{argmin}\ D_{KL}\left(P^{\*}\ \middle\Vert \ P\right) \equiv \underset{\theta}{argmin}\ H\left(P^{\*},\ P\right)$$
 
+## Word Embeddings? Why though? [^3]
+For a second, pause and just imagine how we would explain words and their meanings to computers. How would you provide the following association to a computer?
+> Queen is to King as Woman is to Man
+
+Perhaps, if you had a mathematical function that takes in words and represents them as vectors, you could say:
+$$\Phi("King") = \Phi("Queen") - \Phi("Woman") + \Phi("Man")$$
+
+In word embeddings, the aim is to capture such realtions between words mathematically.
+
+Often you will also see embeddings being writtien as **distributed representations** of words. Why is that?
+> This is because we are distributing the actual meaning of the word over multiple mathematical dimensions. The quality of a "King" being a man is represented by a subset of the dimensions of the vector representation. And, the a particular dimension of the vector representation represents a subset of the qualities a word like "King" can posses.
+
+## An Intro to Language Modelling [^1]
+The fundamental goal of language modelling is to estimate the likelihood of a specific sequence of words appearing in a corpus. More formally, given any sequence of words (w1,w2,w3,...wn) from the training corpus, we would like to maximize:
+$$Pr\left(w_{n} \middle\vert w_{1},w_{2},w_{3},...,w_{n-2},w_{n-1}\right)$$
+over the entire training corpus.
+
+But if we are representing words with the corresponding distributed vector representation, we can also maximize:
+$$Pr\left(w_{n} \middle\vert \Phi(w_{1}),\Phi(w_{2}),\Phi(w_{3}),...,\Phi(w_{n-2}),\Phi(w_{n-1})\right)$$
+
+But recent advancements in Language modelling turn this problem around in ways that only use the "word-vectorizer" function only once. We now aim to do,
+$$\underset{\Phi}{argmin}\ -log\ Pr\left(\{v_{i-w},...,v_{i-1},v_{i+1},...,v_{i+w}\}\ \middle\vert\ \Phi(v_{i})\right)$$
+
+Do you understand how this model is "order-independant"?
+
 [^1]: [DeepWalk: Online Learning of Social Representations](https://arxiv.org/abs/1403.6652)
 [^2]: [Kullback–Leibler divergence Wikipedia](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence)
+[^3]: [Efficient Estimation of Word Representations in Vector Space](https://arxiv.org/abs/1301.3781)
+
+
