@@ -52,7 +52,7 @@ This essentially means that existing language modelling techniques that are alre
 > $$D_{KL}\left( P  \Vert  Q \right)$$
 > is a type of statistical distance: a measure of how one probability distribution P is different from a second reference probability distribution Q.
 
-A simple interpretetion of the KL divergence of P from Q is the expected excess surprise from using Q as a model when the actual distribution is Q. Here is a great video to get intution for the formula for KL Divergence: [Intuitively understanding KL Divergence](https://www.youtube.com/watch?v=SxGYPqCgJWM)
+A simple interpretetion of the KL divergence of P from Q is the expected excess surprise from using Q as a model when the actual distribution is P. Here is a great video to get intution for the formula for KL Divergence: [Intuitively understanding KL Divergence](https://www.youtube.com/watch?v=SxGYPqCgJWM)
 
 Formula for KL Divergence:
 $$D_{KL}\left(P \middle\Vert Q\right)= \sum_{i} P(i)  log\frac{P(i)}{Q(i)}$$
@@ -62,12 +62,9 @@ $$D_{KL}\left(P \middle\Vert Q\right)= \int P(x)  log\frac{P(x)}{Q(x)}dx$$
 This is the most famous loss that we used to calculate the difference between the probability distribution of a model given parameters θ, and the true probability distribution that we wanted our model to predict. You might wonder why we use something like cross-entropy loss to compare distance between the two distributions (as explained above). In this section we prove why changing θ to minimize the cross-entropy loss is equivalent to minimizing the KL Divergence between the distributions.
 
 Let us first quantify the 2 distributions in question:
-1. For input image:
-$$x_{i}$$
-2. We have the true probability of the output as:
-$$P^{\*}(y \vert  x_{i})$$
-3. We have the probability predicted by our model as:
-$$P(y \vert  x_{i},\theta)$$
+1. For input image: \\(x_{i}\\)
+2. We have the true probability of the output as: \\(P^{\*}(y \vert  x_{i})\\)
+3. We have the probability predicted by our model as: \\(P(y \vert  x_{i},\theta)\\)
 
 Now our aim in machine learning is to find θ such that we minimize the KL Divergence of P\* and P. In other words, we want:
 $$\underset{\theta}{argmin}\  D_{KL}\left(P^{\*}\ \middle\Vert \ P\right)$$
@@ -75,15 +72,13 @@ $$\underset{\theta}{argmin}\  D_{KL}\left(P^{\*}\ \middle\Vert \ P\right)$$
 Expanding as,
 
 $$
-\begin{equation}
-\begin{split}
-D_{KL}\left(P^{\*}\ \middle\Vert \ P\right) & = \sum_{y\ \in\ classes} P^{\*}(y \vert x_{i})\ log\frac{P^{\*}(y \vert x_{i})}{P(y \vert\ x_{i},\ \theta)}
-& = \sum_{y\ \in\ classes} P^{\*}(y \vert x_{i})\ log P^{\*}(y \vert x_{i}) - \sum_{y\ \in\ classes} P^{\*}(y \vert x_{i})\ log P(y \vert\ x_{i},\ \theta)
-\end{split}
-\end{equation}
+\begin{aligned}
+D_{KL}\left(P^{\*}\ \middle\Vert \ P\right) & = \sum_{y\ \in\ classes} P^{\*}(y \vert x_{i})\ \log\frac{P^{\*}(y \vert x_{i})}{P(y \vert\ x_{i},\ \theta)}\\\\
+& = \underbrace{\sum_{y\ \in\ classes} P^{\*}(y \vert x_{i})\ \log P^{\*}(y \vert x_{i})}\_{independent\ of\ \theta} - \sum_{y\ \in\ classes} P^{\*}(y \vert x_{i})\ \log P(y \vert\ x_{i},\ \theta)
+\end{aligned}
 $$
 
-As you can see, the first term in the last equation is just the negative of the entropy of the true distribution and is independant of θ. Thus we can see that:
+Thus we can see that:
 
 $$D_{KL}\left(P^{\*}\ \middle\Vert \ P\right) = - H\left(P^{\*}\right) + H\left(P^{\*},P\right)$$
 
@@ -98,7 +93,7 @@ For a second, pause and just imagine how we would explain words and their meanin
 Perhaps, if you had a mathematical function that takes in words and represents them as vectors, you could say:
 $$\Phi("King") = \Phi("Queen") - \Phi("Woman") + \Phi("Man")$$
 
-In word embeddings, the aim is to capture such realtions between words mathematically.
+In word embeddings, the aim is to capture such relations between words mathematically.
 
 Often you will also see embeddings being writtien as **distributed representations** of words. Why is that?
 > This is because we are distributing the actual meaning of the word over multiple mathematical dimensions. The quality of a "King" being a man is represented by a subset of the dimensions of the vector representation. And, the a particular dimension of the vector representation represents a subset of the qualities a word like "King" can posses.
@@ -111,13 +106,38 @@ over the entire training corpus.
 But if we are representing words with the corresponding distributed vector representation, we can also maximize:
 $$Pr\left(w_{n} \middle\vert \Phi(w_{1}),\Phi(w_{2}),\Phi(w_{3}),...,\Phi(w_{n-2}),\Phi(w_{n-1})\right)$$
 
-But recent advancements in Language modelling turn this problem around in ways that only use the "word-vectorizer" function only once. We now aim to do,
-$$\underset{\Phi}{argmin}\ -log\ Pr\left(\{v_{i-w},...,v_{i-1},v_{i+1},...,v_{i+w}\}\ \middle\vert\ \Phi(v_{i})\right)$$
+But recent advancements in Language modelling turn this problem around in ways that only use the "word-vectorizer" function \\(\Phi\\) only once. We now aim to do,
+$$\underset{\Phi}{argmin}\ -\log Pr\left(\\{ v_{i-w},...,v_{i-1},v_{i+1},...,v_{i+w}\\}\ \middle\vert\ \Phi(v_{i})\right)$$
 
-Do you understand how this model is "order-independant"?
+Do you understand how this model is "order-independant"? Hint: Check for set notation somewhere.
+
+## The curse of dimensionality [^4]
+In a normal probabilistic model of a language having a vocabulary of \\(\lvert\mathcal{V}\rvert = 1,000,000\\), how many parameters would you need to create a language model to predict the joint distribution of 10 words?
+
+If you think about it, this is an extremely large number and it doesn't seem feasible to make a model like that. Neither can you share any of the values, because all parameters are discrete and it is difficult to come up with an efficient method of sharing these values. But unlike simplifying a discrete model, simplifying a continuous model is way easier, because continuous functions can be always be approximated using simpler (smoother functions). Thus we must find some way of representing discrete words in a continuous domain. Let us build a neural network to do this for us.
+
+## A Neural Probabilistic Model [^4]
+{{<figure src="../static/probabilistic-language-model.png" caption="Figure 1. A Neural Probabilistic Language Model">}}
+This was **probably** the first model to use deep learning to learn word representations. But the output layer had \\(\lvert\mathcal{V}\rvert\\)
+$$ y = b + Wx + U\tanh\left(d + Hx\right)$$
+$$ \hat{P}\left(w_{t} \vert w_{t-1}, w_{t-2}, w_{t-3}, \ldots w_{t-n+1} \right) = \frac{e^{y_{w_{t}}}}{\sum_{i} e^{y_{i}}}$$
+
+## The SkipGram Model [^5]
+  SkipGram is a language model that maximizes the co-occurence probability among the words that appear in a window \\(\mathcal{w}\\) around the current word. In the simple softmax version of Word2Vec, we update the representation vectors and the probability function, using SGD.
+{{<figure src="../static/skipgram-algorithm.png" caption="Algorithm 2. DeepWalk: Online Learning of Social Representations">}}
+
+But how do you actually find \\(\- \log Pr\left(u_{k} \vert \Phi(v_{j})\right)\\)?
+
+[^5] describes \\(p(\mathcal{w}\_{t+j} \vert \mathcal{w}\_{t})\\) as
+
+$$
+p(w_{O}\vert w_{I}) = \frac{\exp \left(v_{\mathcal{w}\_{O}}^{\prime T} v_{\mathcal{w}\_{I}} \right)}{\sum_{\mathcal{w}=1}^W \exp \left(v_{\mathcal{w}}^{\prime T}v_{\mathcal{w}\_{I}}\right)}
+$$
+
+How feasible do you think this is?
 
 [^1]: [DeepWalk: Online Learning of Social Representations](https://arxiv.org/abs/1403.6652)
 [^2]: [Kullback–Leibler divergence Wikipedia](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence)
 [^3]: [Efficient Estimation of Word Representations in Vector Space](https://arxiv.org/abs/1301.3781)
-
-
+[^4]: [A Neural Probabilistic Language Model](https://www.jmlr.org/papers/volume3/bengio03a/bengio03a.pdf)
+[^5]: [Distributed Representations of Words and Phrases and their Compositionality](https://proceedings.neurips.cc/paper/2013/file/9aa42b31882ec039965f3c4923ce901b-Paper.pdf)
